@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="$SACHMI - The legendary cat meme fusion coin on Solana. Join the clan.">
+    <title>$SACHMI - Solana Cat Fusion</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red-primary: #D32F2F;
+            --red-dark: #B71C1C;
+            --red-light: #EF5350;
+            --orange-accent: #FF9800;
+            --yellow-glow: #FFC107;
+            --white: #FFFFFF;
+            --black: #1A1A1A;
+            --text-dark: #2C2C2C;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--red-primary);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Anime Background Pattern */
+        .anime-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,0,0,.05) 35px, rgba(0,0,0,.05) 70px);
+            animation: bgScroll 20s linear infinite;
+        }
+
+        @keyframes bgScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(70px); }
+        }
+
+        /* Speed Lines Effect */
+        .speed-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .speed-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: speedLine 1.5s linear infinite;
+        }
+
+        .speed-line:nth-child(1) { top: 20%; width: 200px; animation-delay: 0s; }
+        .speed-line:nth-child(2) { top: 40%; width: 150px; animation-delay: 0.3s; }
+        .speed-line:nth-child(3) { top: 60%; width: 180px; animation-delay: 0.6s; }
+        .speed-line:nth-child(4) { top: 80%; width: 160px; animation-delay: 0.9s; }
+
+        @keyframes speedLine {
+            0% { transform: translateX(-200px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--yellow-glow);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--yellow-glow);
+            box-shadow: 0 0 30px rgba(255, 193, 7, 0.6);
+            animation: logoFloat 2s ease-in-out infinite;
+            object-fit: cover;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: block;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .logo-text {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2rem;
+            color: var(--yellow-glow);
+            text-shadow: 3px 3px 0 var(--black), -1px -1px 0 var(--red-dark);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '⚡';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow-glow);
+            transform: translateX(10px);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--red-dark) 0%, var(--red-primary) 50%, var(--red-light) 100%);
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 152, 0, 0.2) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--black);
+            border: 2px solid var(--yellow-glow);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--yellow-glow);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+            animation: badgeBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+            color: var(--yellow-glow);
+            text-shadow: 
+                5px 5px 0 var(--black),
+                -2px -2px 0 var(--black),
+                2px -2px 0 var(--black),
+                -2px 2px 0 var(--black),
+                0 0 50px rgba(255, 193, 7, 0.8);
+            animation: titlePop 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            letter-spacing: 5px;
+        }
+
+        @keyframes titlePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            color: var(--white);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: slideUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideUp 1s ease-out 0.5s backwards;
+        }
+
+        .btn {
+            padding: 1.25rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.125rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--yellow-glow), var(--orange-accent));
+            color: var(--black);
+            border: 3px solid var(--black);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4), inset 0 -3px 0 rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 152, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--red-primary);
+            border: 3px solid var(--black);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset 0 -3px 0 rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Video Section */
+        .video-section {
+            position: relative;
+            z-index: 10;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: -6rem auto 0;
+        }
+
+        .video-container {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 5px solid var(--yellow-glow);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 50px rgba(255, 193, 7, 0.4);
+            position: relative;
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* Comic Panel Effect */
+        .comic-panel {
+            position: relative;
+            background: var(--white);
+            padding: 3px;
+            margin: 4rem 0;
+        }
+
+        .comic-panel::before,
+        .comic-panel::after {
+            content: '';
+            position: absolute;
+            background: var(--black);
+        }
+
+        .comic-panel::before {
+            top: -10px;
+            left: -10px;
+            right: 10px;
+            bottom: 10px;
+            z-index: -1;
+        }
+
+        /* Features Section */
+        .features {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.3);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--yellow-glow);
+            text-shadow: 
+                4px 4px 0 var(--black),
+                -1px -1px 0 var(--black),
+                1px -1px 0 var(--black),
+                -1px 1px 0 var(--black);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            color: var(--white);
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 4px solid var(--black);
+            box-shadow: 8px 8px 0 var(--black);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--red-primary), var(--orange-accent), var(--yellow-glow));
+        }
+
+        .feature-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--black);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--black);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--red-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-description {
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        /* Story Section */
+        .story-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(26,26,26,0.5) 0%, rgba(26,26,26,0.8) 100%);
+        }
+
+        .story-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .story-content {
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 3.5rem;
+            border-radius: 20px;
+            border: 5px solid var(--black);
+            box-shadow: 12px 12px 0 var(--yellow-glow);
+            line-height: 1.9;
+            position: relative;
+        }
+
+        .story-content::before {
+            content: '"';
+            position: absolute;
+            top: -40px;
+            left: 20px;
+            font-size: 120px;
+            color: var(--yellow-glow);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .story-content p {
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .story-content p:first-letter {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--red-primary);
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+        }
+
+        /* Social Section */
+        .social-section {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0 var(--black);
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 var(--black);
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            flex-shrink: 0;
+            border: 3px solid var(--black);
+        }
+
+        .social-info {
+            flex: 1;
+        }
+
+        .social-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--red-primary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-value {
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 3rem 2rem;
+            background: var(--black);
+            text-align: center;
+            color: var(--white);
+            border-top: 5px solid var(--yellow-glow);
+        }
+
+        .footer-content p {
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.875rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .video-section {
+                margin-top: -4rem;
+                padding: 2rem 1rem;
+            }
+
+            .features, .story-section, .social-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .story-content {
+                padding: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                display: none;
+            }
+
+            .nav-links a::before {
+                display: none;
+            }
+
+            .social-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="anime-bg"></div>
+    <div class="speed-lines">
+        <div class="speed-line"></div>
+        <div class="speed-line"></div>
+        <div class="speed-line"></div>
+        <div class="speed-line"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="logo.png" alt="$SACHMI Logo">
+                </div>
+                <span class="logo-text">$SACHMI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#community">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>⚡</span>
+                <span>Built on Solana</span>
+            </div>
+            <h1>$SACHMI</h1>
+            <p class="hero-subtitle">
+                The ultimate meme fusion! When two legendary memes combine, they create something even more powerful. No roadmap, no BS—just pure community energy on Solana! 🐱⚡
+            </p>
+            <div class="cta-container">
+                <a href="#" class="btn btn-primary">
+                    <span>Buy $SACHMI</span>
+                    <i class="fas fa-bolt"></i>
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    <span>Learn More</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="video-section">
+        <div class="video-container">
+            <video autoplay loop muted playsinline poster="banner-poster.jpg">
+                <source src="banner.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title">Power Stats</h2>
+            <p class="section-subtitle">Ninja-level tokenomics on Solana</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚫</div>
+                <h3 class="feature-title">Zero Team Tokens</h3>
+                <p class="feature-description">100% fair launch! No hidden team wallets. True community power from day one!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3 class="feature-title">1B Supply</h3>
+                <p class="feature-description">Fixed max supply with deflationary burns. Every token counts in this ninja clan!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Dev Buybacks</h3>
+                <p class="feature-description">All creator fees used by dev for strategic buybacks. Real support from real humans!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Solana Speed</h3>
+                <p class="feature-description">Lightning jutsu! Trade at sonic speeds with minimal gas fees. Faster than your shadow clone!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🥷</div>
+                <h3 class="feature-title">Fusion Power</h3>
+                <p class="feature-description">Two legendary memes combined! Stronger together, unstoppable on Solana!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">LP Locked</h3>
+                <p class="feature-description">Liquidity sealed forever! No rug pulls, no escape jutsus—100% safe!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section" id="about">
+        <div class="story-container">
+            <div class="section-header">
+                <h2 class="section-title">The Legend</h2>
+            </div>
+            <div class="story-content">
+                <p><strong>S</strong>olana blockchain was just another fast chain until something extraordinary happened. A viral cat meme merged with legendary energy.</p>
+                <p><strong>A</strong>wesome power emerged from this fusion—Sachi the Cat combined with unstoppable meme force to create the ultimate token.</p>
+                <p><strong>C</strong>ommunity-driven from day one, no corporate BS, no empty promises. Just pure meme energy and real people building together.</p>
+                <p><strong>H</strong>ype? We don't chase it—we create it! When two iconic memes fuse, they birth something the crypto world has never seen.</p>
+                <p><strong>M</strong>eme evolution at its finest. While others copy-paste tired formulas, $SACHMI revolutionizes what meme coins can be.</p>
+                <p><strong>I</strong>nstoppable momentum on Solana's lightning-fast blockchain. Join the fusion revolution and witness meme history being made!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-section" id="community">
+        <div class="section-header">
+            <h2 class="section-title">Join the Clan</h2>
+            <p class="section-subtitle">Connect with the fusion community</p>
+        </div>
+        <div class="social-grid">
+            <a href="#" class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="social-info">
+                    <div class="social-label">Contract Address</div>
+                    <div class="social-value">Coming Soon</div>
+                </div>
+            </a>
+            <a href="#" class="social-card">
+                <div class="social-icon">
+                    <i class="fab fa-telegram-plane"></i>
+                </div>
+                <div class="social-info">
+                    <div class="social-label">Telegram</div>
+                    <div class="social-value">Coming Soon</div>
+                </div>
+            </a>
+            <a href="#" class="social-card">
+                <div class="social-icon">
+                    <i class="fab fa-x-twitter"></i>
+                </div>
+                <div class="social-info">
+                    <div class="social-label">X (Twitter)</div>
+                    <div class="social-value">Coming Soon</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 $SACHMI. The Ultimate Meme Fusion on Solana.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">Meme responsibly. DYOR. Not financial advice. 🐱⚡</p>
+        </div>
+    </footer>
+</body>
